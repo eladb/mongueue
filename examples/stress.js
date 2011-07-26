@@ -7,31 +7,6 @@ var
 var db = new Mongolian('mongo://localhost:60000/mongueue_stress_test');
 var queue = new Mongueue(db.collection('stressqueue'));
 
-// tries to dequeue an item. if there are no items, waits 'backoff' seconds
-// and tries again. this is done until an item is available.
-Mongueue.prototype.waitDequeue = function(ttl, backoff, callback) {
-  var self = this;
-  (function dequeueAndWait() {
-    self.dequeue(ttl, function(err, item, releasecb) {
-      // if there was an error, pass it along.
-      if (err) {
-        callback(err, item, releasecb);
-        return;
-      }
-      
-      // if there was no item, wait 'backoff' seconds,
-      // and recursively call dequeueAndWait.
-      if (!item) {
-        setTimeout(dequeueAndWait, backoff * 1000);
-        return;
-      }
-      
-      // call the dequeue callback with the dequeued item.
-      callback(err, item, releasecb);
-    });
-  })();
-};
-
 function processQueue(q) {
   q.waitDequeue(10, 5, function(err, item, rcb) {
     q.count(function(err, count) {

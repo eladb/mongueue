@@ -1,0 +1,24 @@
+{
+  "name": "mongueue",
+  "description": "Simple queue over mongodb",
+  "version": "0.0.1",
+  "homepage": "",
+  "repository": "",
+  "author": "Elad Ben-Israel <elad.benisrael@gmail.com>",
+  "main": "mongueue.js",
+  "keywords": ["mongo", "mongodb", "queue"],
+  "dependencies": {
+    "mongolian": ">=0.1.10"
+    "mongodb": ">=0.9.6-7",
+  },
+  "devDependencies": {
+    "vows": "~0.5",
+    "async": ">=0.1.9",
+  },
+  "scripts": {
+    "test": "node_modules/.bin/vows --spec"
+  },
+  "engines": {
+    "node": ">=0.4.0"
+  }
+}

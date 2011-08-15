@@ -8,8 +8,7 @@
   "main": "mongueue.js",
   "keywords": ["mongo", "mongodb", "queue"],
   "dependencies": {
-    "mongolian": ">=0.1.10",
-    "mongodb": ">=0.9.6-7"
+    "mongolian": ">=0.1.10"
   },
   "devDependencies": {
     "vows": "~0.5",

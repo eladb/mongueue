@@ -1,18 +1,19 @@
 {
   "name": "mongueue",
   "description": "Simple queue over mongodb",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/eladb/mongueue",
   "repository": "git://github.com/eladb/mongueue.git",
   "author": "Elad Ben-Israel <elad.benisrael@gmail.com>",
   "main": "mongueue.js",
   "keywords": ["mongo", "mongodb", "queue"],
   "dependencies": {
-    "mongolian": ">=0.1.10"
+    "mongodb": "~0.9.6-16"
   },
   "devDependencies": {
     "vows": "~0.5",
-    "async": ">=0.1.9"
+    "async": ">=0.1.9",
+	"nodeunit": ">=0.6.4"
   },
   "scripts": {
     "test": "node_modules/.bin/vows --spec"

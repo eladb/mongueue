@@ -5,20 +5,20 @@ var
 var q;
 var mongoClient;
 var options = {
-        user: "ork",
-        pass: "orkie1234",
-        name: "cron",
-        host: "ds029107.mongolab.com",
-        port: 29107,
-		collection: 'queueName'
-    };
+    user: "user",
+    pass: "pass",
+    name: "dbname",
+    host: "localhost",
+    port: 6000,
+    collection: 'queueName'
+};
 
 var server = new mongodb.Server(options.host, options.port, { auto_reconnect: true });
 
 new mongodb.Db(options.name, server, {}).open(function (err, client) {
-	mongoClient = client;
-	if (typeof options.user !== 'string' || typeof options.pass !== 'string') return InitQueue(err, sample);
-	mongoClient.authenticate(options.user, options.pass, function (err) {InitQueue(err, sample)});
+    mongoClient = client;
+    if (typeof options.user !== 'string' || typeof options.pass !== 'string') return InitQueue(err, sample);
+    mongoClient.authenticate(options.user, options.pass, function (err) {InitQueue(err, sample)});
 });
 
 
@@ -32,9 +32,9 @@ function InitQueue(err, callback) {
     var mongoCollection = new mongodb.Collection(mongoClient, options.collection);
     
     q = new Mongueue(mongoCollection);
-	if (callback) callback();
+    if (callback) callback();
 }
-		
+        
 function sample() {
   q.waitDequeue(
   10, // ttl (in seconds)
@@ -42,9 +42,9 @@ function sample() {
   function(err, item, releasefn) {
     console.log("the following item was dequeued:", item);
     releasefn(err);
-	mongoClient.close();
+    mongoClient.close();
   });
-	
+    
   q.enqueue("this is the item to enqueue. any javascript object is good", function(err) {
     if (err) console.error("couldn't queue the item");
     else console.log("item queued");

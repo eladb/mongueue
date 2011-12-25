@@ -1,5 +1,6 @@
 var Mongueue = require('mongueue'),
-    testCase = require('nodeunit').testCase;
+    testCase = require('nodeunit').testCase,
+    mongodb = require('mongodb');
 
 exports.MongueueRescheduleTests = testCase({
     ScheduleNull: testReschedule({reoccurrence: null, now: new Date(), expected: 0}),

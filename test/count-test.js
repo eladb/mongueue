@@ -1,5 +1,5 @@
 var Mongueue = require('mongueue'),
-    mongodb = require('mongodb'),
+    mongodb = require('mongodb'), 
     testCase = require('nodeunit').testCase;
 
 

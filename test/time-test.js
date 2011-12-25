@@ -1,6 +1,5 @@
 var Mongueue = require('mongueue'),
-    testCase = require('nodeunit').testCase,
-    mongodb = require('mongodb');
+    testCase = require('nodeunit').testCase;
 
 exports.MongueueRescheduleTests = testCase({
     ScheduleNull: testReschedule({reoccurrence: null, now: new Date(), expected: 0}),
@@ -20,7 +19,7 @@ exports.MongueueRescheduleTests = testCase({
 
 function testReschedule(scenario) {
     return function (test) {
-        var q = new Mongueue(),
+        var q = new Mongueue({}),
             nextInSec = q.next(scenario.reoccurrence, scenario.now);
         test.ok(scenario.expected == nextInSec, "Expected next time " + nextInSec + '==' + scenario.expected);
         test.done();

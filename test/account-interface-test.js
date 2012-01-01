@@ -78,14 +78,14 @@ function rand() {
 }
 
 function setUpTests (test, callback) {
-// mongolab.com options
+// mongohq.com options
     var options = {
         user: "ork",
         pass: "orkie1234",
         dbname: "cron",
         queuename: "test" + rand(),
-        host: "ds029107.mongolab.com",
-        port: 29107
+        host: "staff.mongohq.com",
+        port: 10074
     };
 
     test.q = new Mongueue(null, options, function (err, mongueue) {

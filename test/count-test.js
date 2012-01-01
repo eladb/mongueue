@@ -1,5 +1,5 @@
 var Mongueue = require('mongueue'),
-    mongodb = require('mongodb'), 
+    mongodb = require('mongodb'),
     testCase = require('nodeunit').testCase;
 
 
@@ -83,8 +83,8 @@ function setUpTests (test, callback) {
         user: "ork",
         pass: "orkie1234",
         name: "cron",
-        host: "ds029107.mongolab.com",
-        port: 29107
+        host: "staff.mongohq.com",
+        port: 10074
     };
 
     var server = new mongodb.Server(options.host, options.port, { auto_reconnect: true });

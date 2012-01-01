@@ -9,38 +9,25 @@ var
   mongodb = require('mongodb'),
   Mongueue = require('../mongueue');
 
-var q;
-var mongoClient;
-var options = {
+var q,
+    options = {
     user: "user",
     pass: "pass",
-    name: "dbname",
+    dbname: "cron",
+	queuename: "name",
     host: "localhost",
     port: 6000,
     collection: 'queueName'
 };
 
-var server = new mongodb.Server(options.host, options.port, { auto_reconnect: true });
+q = new Mongueue(null, options, function (err, mongueue) {
+        if (err) {
+            test.ok(!err, "failed to create queue" + err.errmsg);
+            test.done();
+        }
+        sample();
+    })
 
-new mongodb.Db(options.name, server, {}).open(function (err, client) {
-    mongoClient = client;
-    if (typeof options.user !== 'string' || typeof options.pass !== 'string') return InitQueue(err, sample);
-    mongoClient.authenticate(options.user, options.pass, function (err) {InitQueue(err, sample)});
-});
-
-
-function InitQueue(err, callback) {
-    var self = this;
-    if (err) {
-        console.log('Got error on connect', err);
-        return;
-    }
-
-    var mongoCollection = new mongodb.Collection(mongoClient, options.collection);
-    
-    q = new Mongueue(mongoCollection);
-    if (callback) callback();
-}
         
 function sample() {
   q.waitDequeue(
@@ -49,7 +36,7 @@ function sample() {
   function(err, item, releasefn) {
     console.log("the following item was dequeued:", item);
     releasefn(err);
-    mongoClient.close();
+    q.stop();
   });
     
   q.enqueue("this is the item to enqueue. any javascript object is good", function(err) {
@@ -57,4 +44,5 @@ function sample() {
     else console.log("item queued");
   });
 }
+
 ```

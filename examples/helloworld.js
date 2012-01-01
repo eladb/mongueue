@@ -1,19 +1,39 @@
 var
-  Mongolian = require('mongolian'),
+  mongodb = require('mongodb'),
   Mongueue = require('../mongueue');
 
-var db = new Mongolian("mongo://localhost:60000/db");
-var q = new Mongueue(db.collection('hellogueue'));
+var q,
+    options = {
+    user: "user",
+    pass: "pass",
+    dbname: "cron",
+	queuename: "name",
+    host: "localhost",
+    port: 6000,
+    collection: 'queueName'
+};
 
-q.waitDequeue(
-  10, /* ttl (in seconds) */
-  2,  /* backoff (in seconds) */
+q = new Mongueue(null, options, function (err, mongueue) {
+        if (err) {
+            test.ok(!err, "failed to create queue" + err.errmsg);
+            test.done();
+        }
+        sample();
+    })
+
+        
+function sample() {
+  q.waitDequeue(
+  10, // ttl (in seconds)
+  2,  // backoff (in seconds)
   function(err, item, releasefn) {
     console.log("the following item was dequeued:", item);
     releasefn(err);
+    q.stop();
   });
-
-q.enqueue("this is the item to enqueue. any javascript object is good", function(err) {
-  if (err) console.error("couldn't queue the item");
-  else console.log("item queued");
-});
+    
+  q.enqueue("this is the item to enqueue. any javascript object is good", function(err) {
+    if (err) console.error("couldn't queue the item");
+    else console.log("item queued");
+  });
+}

@@ -29,7 +29,7 @@ for (var i = 0; i < 10; ++i) {
   processQueue(queue);
 }
 
-//var sys = require('sys');
+//var util = require('util');
 var st = process.openStdin();
 console.log('type characters and they will be enqueued');
 st.addListener("data", function(data) {
